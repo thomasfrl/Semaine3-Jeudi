@@ -19,7 +19,7 @@ class Controler
 		check_if_possible = false
 		while check_if_possible == false
 			#1) lui demande où il veut jouer
-			selection = @view.select_case(number)
+			selection = @view.select_advanced(number,@game.board)
 			#2) vérifie si c'est possible
 			check_if_possible = @game.check_possibility(selection)
 		end

@@ -6,5 +6,6 @@ require 'model_player.rb'
 require 'router.rb'
 require 'controler.rb'
 require 'view.rb'
+require 'io/console'
 
 Router.new.perform

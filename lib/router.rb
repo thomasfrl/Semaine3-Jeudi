@@ -10,7 +10,7 @@ class Router
 		puts
 		puts "Commençons par créer les deux joueurs"
 		puts "Quel est le nom du joueur 1 ?"
-		print ">"..
+		print ">"
 		name_player_1 = gets.chomp
 		puts "Quel est le nom du joueur 2 ?"
 		print ">"

@@ -6,21 +6,34 @@ class View
 	end
 
 	#affiche le morpion
-	def display_game(game)
-		puts "  | A | B | C |"
-		puts "-"*15
+	def display_game(game, position =[1,1])
+		system ('clear')
+		puts "  || A || B || C |"
+		puts "-"*18
 		3.times do |i|
 			print "#{i+1} |"
 			3.times do |j|
-				if game[i][j] == 1
-					print " x |" 
-				elsif game[i][j] == 2
-					print " 0 |"
+				if i == position[0] && j == position[1]
+					print "|".red
 				else
-					print "   |"
+					print "|"
 				end
+
+				if game[i][j] == 1
+					print " x " 
+				elsif game[i][j] == 2
+					print " 0 "
+				else
+					print "   "
+				end
+				if i == position[0] && j == position[1]
+					print "|".red
+				else
+					print "|"
+				end
+
 			end
-			puts "\n" + "-"*15	
+			puts "\n" + "-"*18	
 		end
 	end
 
@@ -45,4 +58,61 @@ class View
 		end
 		return [i,j]
 	end
+
+	def select_advanced (number,game)
+		position = [1,1]
+		display_game(game)
+		puts "C'est au joueur #{number} de jouer"
+		puts "Veuillez indiquer la case où vous voulez jouer"
+
+		selected = false
+		while selected == false
+			char = read_char
+			case char
+			when "\e[B"
+				# "DOWN ARROW"
+				position[0] +=1
+				position[0] = 2 if position[0] > 2
+				display_game(game,position)
+			when "\e[A"
+				#"UP ARROW"
+				position[0] -=1
+				position[0] = 0 if position[0] < 0
+				display_game(game,position)
+			when "\e[C"
+				# "RIGHT ARROW"
+				position[1] +=1
+				position[1] = 2 if position[1] > 2
+				display_game(game,position)
+			when "\e[D"
+				# "LEFT ARROW"
+				position[1] -=1
+				position[1] = 0 if position[1] < 0
+				display_game(game,position)
+			when "\u0003"
+				exit 0
+			when "\r"
+				selected = true
+				return position	
+			end	
+		end
+	end
+
+	def read_char
+		STDIN.echo = false
+		STDIN.raw!
+
+		input = STDIN.getc.chr
+		if input == "\e" then
+			input << STDIN.read_nonblock(3) rescue nil
+			input << STDIN.read_nonblock(2) rescue nil
+		end
+	ensure
+		STDIN.echo = true
+		STDIN.cooked!
+
+		return input
+	end
+
 end
+

@@ -21,3 +21,9 @@
 		gem 'google_drive' 
 
 		gem 'launchy' 
+
+		gem 'tty'
+
+		gem 'tty-reader'
+
+		gem 'colorize'
